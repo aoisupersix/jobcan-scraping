@@ -1,4 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { doHello } from "../models/hello";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     context.log('HTTP trigger function processed a request.');
@@ -7,7 +8,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     if (name) {
         context.res = {
             // status: 200, /* Defaults to 200 */
-            body: "Hello " + (req.query.name || req.body.name)
+            body: doHello() + (req.query.name || req.body.name)
         };
     }
     else {
