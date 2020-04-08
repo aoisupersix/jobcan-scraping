@@ -16,5 +16,6 @@
       "project": "./tsconfig.json"
     },
     "rules": {
+      "semi": "off"
     }
   }
