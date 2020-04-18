@@ -1,5 +1,4 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-import { doHello } from '../models/hello'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -11,7 +10,7 @@ const httpTrigger: AzureFunction = async function (
   if (name) {
     context.res = {
       // status: 200, /* Defaults to 200 */
-      body: doHello() + (req.query.name || req.body.name),
+      body: 'hello' + (req.query.name || req.body.name),
     }
   } else {
     context.res = {
