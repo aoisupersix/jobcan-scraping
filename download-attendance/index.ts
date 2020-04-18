@@ -12,7 +12,9 @@ const httpTrigger: AzureFunction = async function (
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   })
   const page = await browser.newPage()
-  await login(page, 'dummy@dummy.com', 'dummy')
+  await login(page, 'dummy@dummy.com', 'dummy').catch((error) =>
+    context.log(`login failed: ${error}`)
+  )
   await browser.close()
 
   if (name) {
