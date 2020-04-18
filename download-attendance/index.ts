@@ -1,5 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import * as puppeteer from 'puppeteer'
+import { login } from '../models/login'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -11,9 +12,7 @@ const httpTrigger: AzureFunction = async function (
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   })
   const page = await browser.newPage()
-  await page.goto('https://id.jobcan.jp/users/sign_in')
-  await page.screenshot({ path: 'screenshot.png' })
-
+  await login(page, 'dummy@dummy.com', 'dummy')
   await browser.close()
 
   if (name) {
