@@ -1,6 +1,10 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import * as puppeteer from 'puppeteer'
 import { login } from '../models/login'
+import {
+  downloadAttendanceByMonth,
+  DownloadFileType,
+} from '../models/attendance-downloader'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -12,9 +16,11 @@ const httpTrigger: AzureFunction = async function (
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   })
   const page = await browser.newPage()
+
   await login(page, 'dummy@dummy.com', 'dummy').catch((error) =>
     context.log(`login failed: ${error}`)
   )
+  await downloadAttendanceByMonth(page, 2020, 4, '', DownloadFileType.Csv)
   await browser.close()
 
   if (name) {
