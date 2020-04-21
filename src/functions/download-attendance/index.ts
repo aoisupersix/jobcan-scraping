@@ -12,13 +12,15 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   context.log('HTTP trigger function download-attendance processed a request.')
-  const name = getQuery(req, 'name')
+  const email = getQuery(req, 'email')
+  const password = getQuery(req, 'password')
+
   const browser = await puppeteer.launch({
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   })
   const page = await browser.newPage()
 
-  await login(page, 'dummy@dummy.com', 'dummy').catch((error) =>
+  await login(page, email, password).catch((error) =>
     context.log(`login failed: ${error}`)
   )
   await downloadAttendanceByMonth(page, 2020, 4, '', DownloadFileType.Csv)
