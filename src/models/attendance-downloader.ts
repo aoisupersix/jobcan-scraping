@@ -31,4 +31,11 @@ export const downloadAttendanceByMonth = async (
   if (page.url() !== attendanceUrl) {
     Promise.reject('jobcan not logged in.')
   }
+
+  const client = await page.target().createCDPSession()
+  client.send('Page.setDownloadBehavior', {
+    behavior: 'allow',
+    downloadPath: downloadPath,
+  })
+  await page.click('input[value="ダウンロード"]')
 }
