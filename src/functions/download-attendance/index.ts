@@ -24,23 +24,16 @@ const httpTrigger: AzureFunction = async function (
     context.log(`jobcan login failed: ${error}`)
     context.res = {
       status: 403,
-      body: `jobcan login failed: ${error}`
+      body: `jobcan login failed: ${error}`,
     }
     return
   })
   await downloadAttendanceByMonth(page, 2020, 4, '', DownloadFileType.Csv)
   await browser.close()
 
-  if (name) {
-    context.res = {
-      // status: 200, /* Defaults to 200 */
-      body: 'Hello ' + (req.query.name || req.body.name),
-    }
-  } else {
-    context.res = {
-      status: 400,
-      body: 'Please pass a name on the query string or in the request body',
-    }
+  context.res = {
+    status: 200,
+    body: 'TODO: ここで出勤簿を返す予定',
   }
 }
 
