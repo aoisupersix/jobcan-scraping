@@ -1,10 +1,10 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import * as puppeteer from 'puppeteer'
-import { login } from '../models/login'
+import { login } from '../../models/login'
 import {
   downloadAttendanceByMonth,
   DownloadFileType,
-} from '../models/attendance-downloader'
+} from '../../models/attendance-downloader'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,

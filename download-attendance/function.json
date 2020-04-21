@@ -15,5 +15,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/download-attendance/index.js"
+  "scriptFile": "../dist/functions/download-attendance/index.js"
 }
