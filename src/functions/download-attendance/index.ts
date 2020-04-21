@@ -20,9 +20,14 @@ const httpTrigger: AzureFunction = async function (
   })
   const page = await browser.newPage()
 
-  await login(page, email, password).catch((error) =>
-    context.log(`login failed: ${error}`)
-  )
+  await login(page, email, password).catch((error) => {
+    context.log(`jobcan login failed: ${error}`)
+    context.res = {
+      status: 403,
+      body: `jobcan login failed: ${error}`
+    }
+    return
+  })
   await downloadAttendanceByMonth(page, 2020, 4, '', DownloadFileType.Csv)
   await browser.close()
 
