@@ -1,6 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import * as puppeteer from 'puppeteer'
 import { login } from '../../models/login'
+import { getQuery } from '../../utils/get-query'
 import {
   downloadAttendanceByMonth,
   DownloadFileType,
@@ -11,7 +12,7 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   context.log('HTTP trigger function download-attendance processed a request.')
-  const name = req.query.name || (req.body && req.body.name)
+  const name = getQuery(req, 'name')
   const browser = await puppeteer.launch({
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   })

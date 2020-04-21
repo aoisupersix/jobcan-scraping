@@ -1,11 +1,12 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+import { getQuery } from '../../utils/get-query'
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
   context.log('HTTP trigger function processed a request.')
-  const name = req.query.name || (req.body && req.body.name)
+  const name = getQuery(req, 'name')
 
   if (name) {
     context.res = {
