@@ -21,7 +21,7 @@ export const login = async (
   await (await page.$('#user_password')).press('Enter')
   await page.waitForNavigation()
 
-  if (page.url() === loginUrl) {
+  if (~page.url().indexOf(loginUrl)) {
     // ログイン失敗
     const error = await page.$eval('p.flash__notice', (e) => e.textContent)
     return Promise.reject(error)
