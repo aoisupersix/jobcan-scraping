@@ -16,7 +16,7 @@ const httpTrigger: AzureFunction = async function (
   const password = getQuery(req, 'password')
 
   const browser = await puppeteer.launch({
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--lang=ja-JP'],
   })
   const page = await browser.newPage()
 
