@@ -14,7 +14,7 @@ export const login = async (
   email: string,
   password: string
 ): Promise<void> => {
-  await page.goto(loginUrl)
+  await page.goto(`${loginUrl}?app_key=atd`)
   await page.type('#user_email', email)
   await page.type('#user_password', password)
 
