@@ -1,4 +1,5 @@
 import { Page } from 'puppeteer'
+import { waitForFileToDownload } from '../utils/download-util'
 
 export enum DownloadFileType {
   Pdf,
@@ -38,4 +39,5 @@ export const downloadAttendanceByMonth = async (
     downloadPath: downloadPath,
   })
   await page.click('input[value="ダウンロード"]')
+  await waitForFileToDownload(downloadPath)
 }
