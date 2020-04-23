@@ -1,6 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 import * as puppeteer from 'puppeteer'
 import { login } from '../../models/login'
+import { PromiseResult } from '../../models/promise-result'
 import { getQuery } from '../../utils/get-query'
 import {
   downloadAttendanceByMonth,
@@ -20,14 +21,19 @@ const httpTrigger: AzureFunction = async function (
   })
   const page = await browser.newPage()
 
-  await login(page, email, password).catch((error) => {
-    context.log(`jobcan login failed: ${error}`)
+  const loginResult: PromiseResult<void> = await login(page, email, password)
+    .then((value) => ({ value }))
+    .catch((error) => ({ error }))
+
+  if (loginResult.error) {
+    context.log(`jobcan login failed. reason: ${loginResult.error}`)
     context.res = {
       status: 403,
-      body: `jobcan login failed: ${error}`,
+      body: `jobcan login failed. reason: ${loginResult.error}`,
     }
     return
-  })
+  }
+
   await downloadAttendanceByMonth(page, 2020, 4, '', DownloadFileType.Csv)
   await browser.close()
 
